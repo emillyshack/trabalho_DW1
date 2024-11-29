@@ -1,0 +1,17 @@
+button{
+    background-color:white;
+    
+}
+.fonte2 {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight:<weight>;
+  font-style:normal;
+}
+
+.font1 {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight:<weight>;
+  font-style:normal;
+}
