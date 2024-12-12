@@ -89,6 +89,26 @@ img {
     background-color: aquamarine;
     text-decoration: line-through;
 }
+/* Estilizando o dark*/
+html, body{
+    height: 100%;
+    background-color: aliceblue;
+    transition: 0.3s;
+}
+
+input[tipe="checkbox"]{
+    display: none;
+}
+.dark, .dark header{
+    background-color: #263238;
+    color: #fff;
+}
+.dark .bi-mon{
+    display: block;
+}
+.dark .bi-brightness-high{
+    display: none;
+}
 </style>
 <body class="dark">
     <header>
@@ -134,8 +154,20 @@ img {
 
 
 </div>
+    <script>
+        /* cria evento ao mudar o chexbox*/
+     const changeThemBtn = document.querySelector("#change-them");
+
+    changeThemBtn.addEventListener("change", function(){
+        document.body.classList.toggle("dark"); /*se esta dark ele tira e vira ligth*/
+
+        
+
+})
+
+    </script>
 
     <script src="script.js"></script>
-    <script  src="scriptdark.js"></script>
+
 </body>
 </html>
