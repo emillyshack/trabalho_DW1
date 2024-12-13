@@ -3,245 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarefas</title>
+    <title>Lista de Tarefas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4682b4;
+            margin-bottom: 20px;
+        }
+
+        .caixa {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .caixa input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .caixa button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4682b4;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .caixa button:hover {
+            background-color: #5a9bd3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        li p {
+            flex: 1;
+            margin: 0;
+            padding: 0 10px;
+        }
+
+        li img {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        /* Barra de progresso */
+        #progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            height: 100%;
+            width: 0;
+            background-color: #4682b4;
+            transition: width 0.3s;
+        }
+
+        #progress-text {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Modo escuro */
+        header {
+    background: transparent; /* Remove qualquer fundo do cabeçalho */
+}
+
+        header label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            margin: 0 auto;
+            border-radius: 50%;
+            cursor: pointer;
+            background-color: transparent; /* Garante fundo transparente */
+            border: none; /* Remove bordas */
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: none; /* Remove sombra */
+        }
+
+        header label:hover {
+            background-color: rgba(0, 0, 0, 0.1); /* Fundo levemente escuro no hover */
+        }
+
+        header label i {
+            font-size: 24px;
+            color: #4682b4; /* Cor do ícone no tema claro */
+            transition: color 0.3s;
+        }
+
+        .dark header label {
+            background-color: transparent; 
+            box-shadow: none; 
+        }
+
+        .dark header label:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Fundo levemente claro no hover  */
+        }
+
+        .dark header label i {
+            color: #ffeb3b; /
+        }
+
+
+        .dark {
+            background-color: #263238;
+            color: white;
+        }
+
+        .dark .container {
+            background-color: #37474f;
+            color: white;
+        }
+
+        .dark li {
+            background-color: #455a64;
+            border-color: #546e7a;
+            color: white;
+        }
+
+        /* Modal */
+        .janela-modal {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .modal {
+            width: 500px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal h1 {
+            margin-bottom: 10px;
+            color: #4682b4;
+        }
+
+        .modal .fechar {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #4682b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal .fechar:hover {
+            background: #5a9bd3;
+        }
+
+        .janela-modal.abrir {
+            display: flex;
+        }
+    </style>
 </head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="styledark.css">
-<link rel="stylesheet" href="fontes.css">
-
-<style>
-   * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.container { 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-#btn {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.caixa {
-    border: solid black 1px;
-    border-radius: 10px;
-    width: 300px;
-    height: 40px;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 10px;
-}
-
-.caixa2 {
-    border: solid black 1px;
-    border-radius: 10px;
-    width: 300px;
-    max-height: 40vh; 
-    padding: 20px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    flex-direction: column;
-    overflow-y: auto; 
-    transition: all 0.3s ease; 
-}
-
-#lista {
-    list-style: none;
-    width: 100%;
-    padding: 0;
-}
-
-li {
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between;
-    margin-bottom: 10px;
-    padding: 5px 10px; 
-    border: 1px solid black; 
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-p {
-    margin: 0;
-    padding: 0;
-    flex: 1; 
-    padding-left: 10px;
-}
-
-img {
-    height: 20px;
-    cursor: pointer;
-}
-
-.done{
-    background-color: aquamarine;
-    text-decoration: line-through;
-}
-/* Estilizando o dark*/
-html, body{
-    height: 100%;
-    background-color: aliceblue;
-    transition: 0.3s;
-}
-
-input[tipe="checkbox"]{
-    display: none;
-}
-.dark, .dark header{
-    background-color: #263238;
-    color: #fff;
-}
-.dark .bi-moon{
-    display: none;
-}
-.dark .bi-sun{
-    display: block;
-}
-
-/* expansivo*/
-.btn:houver{
-    background-color: black;
-}
-.janela-modal {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    top: 0;
-    left: 0;
-    background-color: rgba(3, 12, 19, 0.405);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-}
-.modal{
-    width: 60%;
-    min-width: 450px;
-    min-height: 450px;
-    background-color: #8c9ef0b3;
-    backdrop-filter: blur(10px);
-    padding: 50px;
-    border-radius: 20px;
-
-}
-.fechar{
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border:0;
-    background-color: red;
-    color: white;
-    cursor: pointer;
-}
-.janela-modal.abrir{
-    display: flex;
-    
-}
-
-</style>
-<body class="dark">
-    
+<body>
     <header>
-        <div>
-        <input type="checkbox" name="change-theme" id="change-theme">
-        <label for="change-theme">
-            <i class="bi bi-sun"></i>
-            <i class="bi bi-moon"></i>
-        </label>
-    </div>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <input type="checkbox" id="change-theme">
+            <label for="change-theme">
+                <i class="bi bi-sun" id="sun-icon"></i>
+            <i class="bi bi-moon" id="moon-icon" style="display: none;"></i>
+            </label>
+        </div>
     </header>
-    
 
-    <div>   
-
-        <h1>Lista de Tarefas</h1>
-       
     <div class="container">
+        <h1>Lista de Tarefas</h1>
         <div class="caixa">
-            <div>
-                <input id="barra" placeholder="Digite sua Tarefa">
-                <button id="btn">+</button>
-            </div>
+            <input id="barra" type="text" placeholder="Digite sua tarefa">
+            <button id="btn">Adicionar</button>
         </div>
-            <div class="caixa2">
-                <ul id="lista">
-                   
-                </ul>
-            </div>
-        
+        <ul id="lista"></ul>
+
+        <div id="progress-bar">
+            <div id="progress-fill"></div>
+        </div>
+        <div id="progress-text">0 / 0 tarefas concluídas</div>
+
+        <button onclick="abrirModal()" style="margin-top: 20px; padding: 10px 20px; background: #4682b4; color: white; border: none; border-radius: 5px; cursor: pointer;">Desenvolvedores</button>
     </div>
 
-    <div style="margin-top: 20px; width: 100%;">
-        <div style="display: flex; align-items: center;">
-            <div id="progress-bar" style="width: 80%; height: 20px; background-color: #f1f1f1; border: 1px solid black; border-radius: 5px; overflow: hidden;">
-                <div id="progress-fill" style="height: 100%; width: 0%; background-color: aquamarine; transition: width 0.3s;"></div>
-            </div>
-            <span id="progress-text" style="margin-left: 10px; font-family: Arial, sans-serif; font-size: 14px;">0 / 0 tarefas concluídas</span>
+    <div class="janela-modal" id="janela-modal">
+        <div class="modal">
+            <h1>Desenvolvimento Web 1</h1>
+            <p>Bruno Arruda Shiba - (44) 8414-6467 <a href="https://web.whatsapp.com/">
+                <i class="fa fa-whatsapp"></i>
+            </a></p> 
+            <p>Emanuel Alves de Souza - (44) 9888-1117 <a href="https://wa.me/qr/VDUUH7LL26BVF1">
+                <i class="fa fa-whatsapp"></i></a></p>
+            <p>Emilly Damasceno Walter - (44) 9845-9139 <a href="https://wa.me/qr/EIYOEJAW3FY2L1">
+                <i class="fa fa-whatsapp"></i></a></p>
+            <button class="fechar" id="fechar">Fechar</button>
         </div>
     </div>
-   
-</div>
-<div><button onclick="abrirModal()" class="btn"> Desenvolvedores</button></div>
-</div class="janela-modal" id="janela-modal">
-<div class="modal">
-    <button class="fechar" id="fechar">X</button>
-    <h1 >Desenvolvimento Web 1</h1>
-    <div>
-        <h2>Alunos:</h2>
-        <ul>
-            <ul>Bruno Arruda Shiba - (44) 8414-6467</ul>
-            <div>
-                <a href="https://web.whatsapp.com/">
-                    <i class="fa fa-whatsapp"></i>
-                </a>
-            </div>
-            
-            
-            <ul>Emanuel Alves de Souza - (44) 9888-1117</ul>
-            <div>
-                <a href="https://wa.me/qr/VDUUH7LL26BVF1">
-                    <i class="fa fa-whatsapp"></i>
-                </a>
-            </div>
-            <ul>Emilly Damasceno Walter - (44) 9845-9139</ul>
-            <div class="">
-                <a href="https://wa.me/qr/EIYOEJAW3FY2L1">
-                    <i class="fa fa-whatsapp"></i>
-                </a>
-            </div>
-    </div>
-</div>
-
-
-
-    <script>
-        /* cria evento ao mudar o chexbox*/
-     const changeThemBtn = document.querySelector("#change-them");
-
-    changeThemBtn.addEventListener("change", function(){
-        document.body.classList.toggle("dark"); /*se esta dark ele tira e vira ligth*/
-
-})
-
-    </script>
 
     <script src="script.js"></script>
-    <script src="modal.js"></script>
+    <script>
+        const changeThemeBtn = document.querySelector("#change-theme");
+        const modal = document.getElementById("janela-modal");
+        const closeModal = document.getElementById("fechar");
 
+        // Alternar tema
+        changeThemeBtn.addEventListener("change", function () {
+            document.body.classList.toggle("dark");
+        });
+
+        // Modal
+        function abrirModal() {
+            modal.classList.add("abrir");
+        }
+
+        closeModal.addEventListener("click", function () {
+            modal.classList.remove("abrir");
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.ctrlKey && event.key === "h") {
+                abrirModal();
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
+
+
+
+
+
